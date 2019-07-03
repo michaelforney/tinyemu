@@ -237,7 +237,7 @@ void phys_mem_set_addr(PhysMemoryRange *pr, uint64_t addr, BOOL enabled)
     if (!pr->is_ram) {
         default_set_addr(map, pr, addr, enabled);
     } else {
-        return map->set_ram_addr(map, pr, addr, enabled);
+        map->set_ram_addr(map, pr, addr, enabled);
     }
 }
 
