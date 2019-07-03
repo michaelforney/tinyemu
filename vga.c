@@ -613,7 +613,7 @@ static uint32_t vga_read_ ## base(void *opaque, uint32_t addr, int size_log2)\
 }\
 static void vga_write_ ## base(void *opaque, uint32_t addr, uint32_t val, int size_log2)\
 {\
-    return vga_ioport_write(opaque, base + addr, val);\
+    vga_ioport_write(opaque, base + addr, val);\
 }
 
 VGA_IO(0x3c0)

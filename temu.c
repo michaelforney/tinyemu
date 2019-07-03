@@ -475,7 +475,7 @@ int slirp_can_output(void *opaque)
 void slirp_output(void *opaque, const uint8_t *pkt, int pkt_len)
 {
     EthernetDevice *net = opaque;
-    return net->device_write_packet(net, pkt, pkt_len);
+    net->device_write_packet(net, pkt, pkt_len);
 }
 
 static void slirp_select_fill1(EthernetDevice *net, int *pfd_max,
