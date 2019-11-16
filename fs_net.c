@@ -2556,7 +2556,7 @@ static int fs_cmd_xhr(FSDevice *fs, FSFile *f,
     s->fd = fd;
     s->post_fd = post_fd;
     if (aes_key_len != 0) {
-        AES_set_decrypt_key(aes_key, FS_KEY_LEN * 8, &s->aes_state);
+        br_aes_big_cbcdec_init(&s->aes_state.c_big, aes_key, FS_KEY_LEN);
         paes_state = &s->aes_state;
     } else {
         paes_state = NULL;
@@ -2646,7 +2646,7 @@ static int fs_cmd_set_base_url(FSDevice *fs, const char *p)
     if (aes_key_len != 0) {
         if (aes_key_len != FS_KEY_LEN)
             goto fail;
-        AES_set_decrypt_key(aes_key, FS_KEY_LEN * 8, &aes_state);
+        br_aes_big_cbcdec_init(&aes_state.c_big, aes_key, FS_KEY_LEN);
         paes_state = &aes_state;
     } else {
         paes_state = NULL;

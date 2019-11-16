@@ -29,9 +29,8 @@
 #include "aes.h"
 #include "sha256.h"
 #else
-#include <openssl/aes.h>
-#include <openssl/sha.h>
-#include <openssl/evp.h>
+#include <bearssl.h>
+typedef br_aes_gen_cbcdec_keys AES_KEY;
 #endif
 #ifdef _WIN32
 #include <winsock2.h>
