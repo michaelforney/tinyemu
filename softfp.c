@@ -35,7 +35,25 @@ static inline int clz32(uint32_t a)
     if (a == 0) {
         r = 32;
     } else {
+#ifdef __GNUC__
         r = __builtin_clz(a);
+#else
+	int t;
+
+	t = ((a & 0xffff0000) == 0) << 4;
+	a >>= 16 - t;
+	r = t;
+	t = ((a & 0xff00) == 0) << 3;
+	a >>= 8 - t;
+	r |= t;
+	t = ((a & 0xf0) == 0) << 2;
+	a >>= 4 - t;
+	r |= t;
+	t = ((a & 0xc) == 0) << 1;
+	a >>= 2 - t;
+	r |= t;
+	r += 2 - a & -((a & 2) == 0);
+#endif
     }
     return r;
 }
@@ -47,7 +65,15 @@ static inline int clz64(uint64_t a)
         r = 64;
     } else 
     {
+#ifdef __GNUC__
         r = __builtin_clzll(a);
+#else
+	int t;
+
+	t = ((a & 0xffffffff00000000) == 0) << 8;
+	a >>= 32 - t;
+	r = t | clz32(a);
+#endif
     }
     return r;
 }
