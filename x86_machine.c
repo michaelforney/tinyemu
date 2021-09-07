@@ -2206,9 +2206,6 @@ static void pc_vm_send_mouse_event(VirtMachine *s1, int dx, int dy, int dz,
     }
 }
 
-struct screen_info {
-} __attribute__((packed));
-
 /* from plex86 (BSD license) */
 struct  __attribute__ ((packed)) linux_params {
     /* screen_info structure */
