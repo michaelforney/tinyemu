@@ -41,9 +41,8 @@
 #include "slirp.h"
 #include "ip_icmp.h"
 
-#define container_of(ptr, type, member) ({                      \
-        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
-        (type *)( (char *)__mptr - offsetof(type,member) );})
+#define container_of(ptr, type, member) \
+        (type *)((char *)ptr - offsetof(type, member))
 
 static struct ip *ip_reass(Slirp *slirp, struct ip *ip, struct ipq *fp);
 static void ip_freef(Slirp *slirp, struct ipq *fp);
