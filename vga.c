@@ -506,9 +506,6 @@ static void vga_ioport_write(VGAState *s, uint32_t addr, uint32_t val)
         } else {
             index = s->ar_index & 0x1f;
             switch(index) {
-            case 0x00 ... 0x0f:
-                s->ar[index] = val & 0x3f;
-                break;
             case 0x10:
                 s->ar[index] = val & ~0x10;
                 break;
@@ -525,6 +522,8 @@ static void vga_ioport_write(VGAState *s, uint32_t addr, uint32_t val)
                 s->ar[index] = val & ~0xf0;
                 break;
             default:
+                if (index <= 0x0f)
+                    s->ar[index] = val & 0x3f;
                 break;
             }
         }

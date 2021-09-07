@@ -291,46 +291,11 @@ static void pci_device_config_write8(PCIDevice *d, uint32_t addr,
     switch(d->config[0x0e]) {
     case 0x00:
     case 0x80:
-        switch(addr) {
-        case 0x00:
-        case 0x01:
-        case 0x02:
-        case 0x03:
-        case 0x08:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-        case 0x0e:
-        case 0x10 ... 0x27: /* base */
-        case 0x30 ... 0x33: /* rom */
-        case 0x3d:
-            can_write = 0;
-            break;
-        default:
-            can_write = 1;
-            break;
-        }
+        can_write = addr >= 0x40 || 1ull << addr & 0xdff0ff000000b0f0;
         break;
     default:
     case 0x01:
-        switch(addr) {
-        case 0x00:
-        case 0x01:
-        case 0x02:
-        case 0x03:
-        case 0x08:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-        case 0x0e:
-        case 0x38 ... 0x3b: /* rom */
-        case 0x3d:
-            can_write = 0;
-            break;
-        default:
-            can_write = 1;
-            break;
-        }
+        can_write = addr >= 0x40 || 1ull << addr & 0xd0ffffffffffb0f0;
         break;
     }
     if (can_write)
